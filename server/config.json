@@ -1,0 +1,11 @@
+{
+  "octopus": {
+    "apiUrl": "",
+    "apiKey": ""
+  },
+  "rabbitMQ": {
+    "apiUrl": "",
+    "user": "",
+    "password": ""
+  }
+}
