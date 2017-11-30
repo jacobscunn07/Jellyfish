@@ -2,11 +2,11 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const webpack = require('webpack');
+const btoa = require('btoa');
 const path = require('path');
 const open = require('open');
 const config = require('./../webpack.config');
 const appConfig = require('./config');
-
 
 const port = 3000;
 const app = express();
@@ -20,10 +20,11 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.get('/api/rabbitmq', (req, res) => {
+  const rabbitAuth = btoa(`${appConfig.rabbitMQ.user}:${appConfig.rabbitMQ.password}`);
   fetch(`${appConfig.rabbitMQ.apiUrl}/queues/real-prod`, {
     method: 'GET',
     headers: {
-      Authorization: 'Basic cmFiYml0OnJhYmJpdA==',
+      Authorization: `Basic ${rabbitAuth}`,
     },
   })
     .then(response => response.json())
